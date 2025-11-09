@@ -5,13 +5,14 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
+# Ku rakib bash iyo dependencies muhiim ah
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
         git \
+        bash \
         build-essential \
         libssl-dev \
-    && apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    && rm -rf /var/lib/apt/lists/*
 
 COPY requirements.txt .
 
@@ -20,4 +21,8 @@ RUN pip install --upgrade pip && \
 
 COPY . .
 
+# Hubi in thunder.sh uu yahay executable
+RUN chmod +x thunder.sh
+
+# Isticmaal bash si uu u bilaabo botka
 CMD ["bash", "thunder.sh"]
