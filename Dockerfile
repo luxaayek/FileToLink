@@ -5,24 +5,25 @@ ENV PYTHONUNBUFFERED=1 \
 
 WORKDIR /app
 
-# Ku rakib bash iyo dependencies muhiim ah
+# Rakib dependencies muhiim ah oo Koyeb aqbasho
 RUN apt-get update && \
     apt-get install -y --no-install-recommends \
-        git \
         bash \
+        git \
         build-essential \
         libssl-dev \
     && rm -rf /var/lib/apt/lists/*
 
+# Copy dependencies oo rakib
 COPY requirements.txt .
-
 RUN pip install --upgrade pip && \
     pip install --no-cache-dir -r requirements.txt
 
+# Copy code-ka intiisa kale
 COPY . .
 
-# Hubi in thunder.sh uu yahay executable
+# Si thunder.sh uu u noqdo executable
 RUN chmod +x thunder.sh
 
-# Isticmaal bash si uu u bilaabo botka
+# Start the bot
 CMD ["bash", "thunder.sh"]
